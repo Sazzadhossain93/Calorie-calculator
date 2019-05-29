@@ -1,0 +1,66 @@
+<div class="col-md-6">
+  <h5>Total Calories : {{totalCalorie}}</h5>
+</div>
+
+
+<table *ngIf = "items?.length > 0; else noItems" >
+
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Calorie</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor= "let item of items" class="collection" >
+    
+       
+      <td>{{ item.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.calorie }}</td>
+
+      <a href="#" class="secondary-content">
+        <i (click) = "editItem($event, item)" class="fa fa-pencil"></i>
+        <i *ngIf = "editState && itemToEdit.id == item.id"(click) = "clearState()" class="fa fa-compress"></i>
+      
+     <div *ngIf = "editState && itemToEdit.id == item.id">
+
+      <form (ngSubmit) = "updateItem(item)">
+
+          <div class="row">
+              <div class="input-field col s4">
+                <input type="text" placeholder="Add Name"[(ngModel)] = "item.name" name = "name">
+                
+        
+              </div>
+        
+              <div class="input-field col s4">
+                <input type="text" placeholder="Add Quantity"[(ngModel)] = "item.quantity" name= "quantity">
+                
+        
+              </div>
+        
+              <div class="input-field col s4">
+                <input type="text" placeholder="Add Calorie"[(ngModel)] = "item.calorie" name="calorie">
+               
+        
+              </div>
+              <input type="submit" value ="Update Item" class="btn orange">
+              <button (click) = "deleteItem(event, item)" class="btn red">Delete Item</button>
+            </div>
+      </form>
+     </div> 
+      
+      </a> 
+   
+      </tr>
+  </tbody>
+</table>
+
+
+<ng-template #noItems>
+  <hr>
+  <h5>There are no items to the list</h5>
+</ng-template>
